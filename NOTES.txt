@@ -1,0 +1,76 @@
+gcloud preview container clusters create hello-world \
+    --num-nodes 1 \
+    --machine-type g1-small
+
+gcloud compute instances list
+
+gcloud preview container pods create \
+    --name wordpress \
+    --image=tutum/wordpress \
+    --port=80
+
+
+
+gcloud preview container pods create --config-file mongo-pod.json
+
+gcloud preview container services create --config-file mongo-service.json
+
+
+
+meteor build ../ff --architecture os.linux.x86_64
+
+
+docker build -t="chees/meteor-testje" .
+docker push chees/meteor-testje
+
+docker run chees/meteor-testje
+
+gcloud preview container replicationcontrollers create --config-file meteor-controller.json
+
+gcloud preview container services create --config-file meteor-service.json
+
+gcloud compute firewall-rules create meteor-80 --allow=tcp:80 --target-tags k8s-meteor-node
+
+
+
+~/projects/gke $ gcloud preview container pods list
+NAME                                   IMAGE(S)                HOST                                                           LABELS                  STATUS
+mongo                                  mongo                   k8s-meteor-node-1.c.river-bruin-797.internal/199.223.236.148   name=mongo,role=mongo   Running
+18c33215-8638-11e4-af38-42010af00621   chees/meteor-testje:1   k8s-meteor-node-2.c.river-bruin-797.internal/130.211.190.133   name=meteor             Running
+18c456f0-8638-11e4-af38-42010af00621   chees/meteor-testje:1   k8s-meteor-node-1.c.river-bruin-797.internal/199.223.236.148   name=meteor             Running
+
+~/projects/gke $ gcloud preview container replicationcontrollers list
+NAME                IMAGE(S)                SELECTOR            REPLICAS
+meteor-controller   chees/meteor-testje:1   name=meteor         2
+
+~/projects/gke $ gcloud preview container services list
+NAME                LABELS              SELECTOR                                  IP                  PORT
+kubernetes                              component=apiserver,provider=kubernetes   10.87.251.51        443
+kubernetes-ro                           component=apiserver,provider=kubernetes   10.87.249.67        80
+mongo               name=mongo          name=mongo,role=mongo                     10.87.255.40        27017
+meteor                                  name=meteor                               10.87.251.36        80
+
+
+Questions:
+
+There are many overlapping technologies now. How do these relate?
+Kubernetes
+Container Engine
+Managed VMs
+Deployment Manager
+Instance Group Manager (used to be Replica Pools?)
+
+
+
+
+
+TODO
+- disks? where does mongo store its data?
+- enable oplog
+- load testing tool
+- deploy scripts
+- docs
+- blog post
+
+
+
