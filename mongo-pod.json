@@ -1,0 +1,20 @@
+{
+  "id": "mongo",
+  "kind": "Pod",
+  "apiVersion": "v1beta1",
+  "desiredState": {
+    "manifest": {
+      "version": "v1beta1",
+      "id": "mongo",
+      "containers": [{
+        "name": "mongo",
+        "image": "mongo",
+        "cpu": 100,
+        "ports": [{ "name": "mongo", "containerPort": 27017 }]
+      }]
+    }
+  },
+  "labels": {
+    "name": "mongo", "role": "mongo"
+  }
+}
