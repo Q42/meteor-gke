@@ -10,7 +10,20 @@
         "name": "mongo",
         "image": "mongo",
         "cpu": 1000,
-        "ports": [{ "name": "mongo", "containerPort": 27017 }]
+        "ports": [{ "name": "mongo", "containerPort": 27017 }],
+        "volumeMounts": [{
+          "mountPath": "/data/db",
+          "name": "mongo-disk"
+        }]
+      }],
+      "volumes": [{
+        "name": "mongo-disk",
+        "source": {
+          "persistentDisk": {
+            "pdName": "mongo-disk",
+            "fsType": "ext4"
+          }
+        }
       }]
     }
   },
