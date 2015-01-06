@@ -1,12 +1,24 @@
 Prerequisites
 -------------
 
-Follow the steps in [Before You Begin](https://cloud.google.com/container-engine/docs/before-you-begin) to create a project, enable billing, and activate the Container Engine and Compute Engine APIs.
+Follow the steps in [Before You Begin](https://cloud.google.com/container-engine/docs/before-you-begin) to create a project, enable billing, and activate the Container Engine and Compute Engine APIs. Don't forget to turn on the preview component!
+
+Now you'll need to sign in to your Google account.
+
+    gcloud auth login
 
 Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones#available) and region to use. You won't need to specify the --zone flag in your gcloud commands once this is set.
 
     gcloud config set compute/zone europe-west1-c
     gcloud config set compute/region europe-west1
+
+### TODO: just run createcluster.sh
+- and create a disk
+- create a docker container from your meteor app
+- publish the container
+- 
+
+
 
 
 Create a Container Engine cluster
