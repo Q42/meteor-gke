@@ -9,7 +9,7 @@
       "containers": [{
         "name": "mongo",
         "image": "mongo",
-        "cpu": 100,
+        "cpu": 1000,
         "ports": [{ "name": "mongo", "containerPort": 27017 }]
       }]
     }
