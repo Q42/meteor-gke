@@ -71,6 +71,7 @@ TODO
 - deploy scripts
 - docs
 - blog post
-
+- change number of replicas for scaling
+- 
 
 
