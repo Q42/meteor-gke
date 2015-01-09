@@ -14,6 +14,7 @@ echo "Waiting for Mongo to start..."
 while true; do
   MONGO_STATUS=`gcloud preview container pods describe mongo | tr -d '\n' | tr ' ' '\n' | tail -n1`
   if [ "$MONGO_STATUS" == "Running" ]; then
+    echo
     break
   fi
   printf "."

@@ -65,12 +65,13 @@ Instance Group Manager (used to be Replica Pools?)
 
 
 TODO
-- disks? where does mongo store its data?
 - enable oplog
 - load testing tool
 - deploy scripts
 - docs
 - blog post
 
+
+- Visual overview of architecture
 
 
