@@ -76,3 +76,39 @@ TODO
 - Visual overview of architecture
 
 
+
+
+cloudcfg.sh -u 15s rollingupdate dataController
+
+
+./kubecfg.sh --server=https://146.148.12.83 --auth-path=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/kubernetes_auth --certificate-authority=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/ca.crt --client-key=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/kubecfg.key --client-certificate=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/kubecfg.crt -u 15s rollingupdate meteor-controller
+
+./kubecfg.sh --auth=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/kubernetes_auth --certificate_authority=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/ca.crt --client_key=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/kubecfg.key --client_certificate=/Users/christiaan/.config/gcloud/kubernetes/river-bruin-797.europe-west1-c.meteor/kubecfg.crt -u 15s rollingupdate meteor-controller
+
+
+
+Use Kubernetes directly instead of GKE:
+
+cluster/kubectl.sh get pods
+cluster/kubectl.sh get replicationcontrollers
+
+cluster/kubectl.sh create -f ~/projects/gke/mongo-pod.json
+cluster/kubectl.sh create -f ~/projects/gke/mongo-service.json
+cluster/kubectl.sh create -f ~/projects/gke/meteor-controller.json
+cluster/kubectl.sh create -f ~/projects/gke/meteor-service.json
+gcloud compute firewall-rules create meteor-80 --allow=tcp:80 --target-tags kubernetes-minion
+
+gcloud compute forwarding-rules list
+
+# Now we can use kubecfg.sh to do a rolling update:
+cluster/kubecfg.sh -u 15s rollingupdate meteor-controller
+
+This still doesn't seem to pick up the latest image :(
+So... how do we do updates?
+
+
+
+
+http://stackoverflow.com/questions/26788485/how-do-i-run-private-docker-images-on-google-container-engine
+
+
