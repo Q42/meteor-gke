@@ -106,6 +106,7 @@ cluster/kubecfg.sh -u 15s rollingupdate meteor-controller
 This still doesn't seem to pick up the latest image :(
 So... how do we do updates?
 
+When we use `kubectl.sh` instead of `gcloud preview container` the load balancer in meteor-service doesn't use session affinity so can't be used for Meteor.
 
 
 
