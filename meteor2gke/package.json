@@ -1,0 +1,21 @@
+{
+  "name": "meteor2gke",
+  "version": "0.0.1",
+  "description": "Deploy Meteor to Google Container Engine",
+  "dependencies": {
+    "cjson": "0.3.x",
+    "uuid": "1.4.x",
+    "colors": "0.6.x",
+    "rimraf": "2.x.x"
+  },
+  "bin": {
+    "meteor2gke": "./bin/meteor2gke"
+  },
+  "preferGlobal": "true",
+  "author": "Christiaan Hees <christiaan@q42.nl>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/q42/meteor2gke.git"
+  },
+  "license": "MIT"
+}
