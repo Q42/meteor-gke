@@ -33,5 +33,6 @@ gcloud preview container services create --config-file meteor-service.json
 # We need to configure the correct firewall rules or nothing will get through
 gcloud compute firewall-rules create meteor-80 --allow=tcp:80 --target-tags k8s-meteor-node
 
-# End the program by showing us a list of what's running
-gcloud compute forwarding-rules list
+echo
+echo "Your Meteor app should now be available on the following ip address:"
+gcloud compute forwarding-rules list meteor
