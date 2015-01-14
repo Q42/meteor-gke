@@ -109,7 +109,31 @@ So... how do we do updates?
 When we use `kubectl.sh` instead of `gcloud preview container` the load balancer in meteor-service doesn't use session affinity so can't be used for Meteor.
 
 
+Kubernetes cleanup:
+gcloud preview container clusters delete meteor
+gcloud compute forwarding-rules delete meteor --quiet
+gcloud compute target-pools delete meteor --quiet
+gcloud compute firewall-rules delete meteor-80 --quiet
+
+
 
 http://stackoverflow.com/questions/26788485/how-do-i-run-private-docker-images-on-google-container-engine
 
+
+
+TODO clean up files
+TODO createdisk in createcluster and rename to setup.sh
+TODO documentation on how to use the Dockerfile
+TODO update script
+
+
+
+Ideal steps:
+One time:
+- meteor add gke
+- edit Dockerfile (FROM meteorgke or something like that)
+- edit gkeconfig to set your region, zone and amount of frontend instances you want, etc.
+- meteor gke createcluster (should automatically run createdisk if needed) (could also have a wizard to create and edit the Dockerfile and gkeconfig)
+Every deploy:
+- meteor gke deploy 3 (builds and pushes your meteor app as version 3, creates a replicationcontroller for version 3, deletes replicationcontrollers for older versions and deletes pods for older versions one by one)
 
