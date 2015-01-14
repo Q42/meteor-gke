@@ -20,6 +20,16 @@ Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones
 
 
 
+Building the meteor-kubernetes image
+------------------------------------
+
+As a normal user you don't need to do this since the image is already built. You can just use it as a base image.
+To build and push the base meteor-kubernetes image:
+
+    docker build -t chees/meteor-kubernetes .
+    docker push chees/meteor-kubernetes
+
+
 
 Create a Container Engine cluster
 ---------------------------------
