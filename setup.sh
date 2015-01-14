@@ -5,11 +5,8 @@ DISK_SIZE=200GB
 ZONE=europe-west1-c
 
 
-# TODO set default project
-
-# First we must tell Cloud Platform which region we want our Compute Engine servers to run in
-gcloud config set compute/zone europe-west1-c
-gcloud config set compute/region europe-west1
+# TODO make project, zone, region and cluster configurable and pass it to every gcloud command?
+# TODO set CLOUDSDK_CONTAINER_CLUSTER ?
 
 # Create a new cluster called "meteor". This will take a few minutes.
 gcloud preview container clusters create meteor
