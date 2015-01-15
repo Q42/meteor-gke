@@ -12,12 +12,6 @@ Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones
     gcloud config set compute/zone europe-west1-c
     gcloud config set compute/region europe-west1
 
-### TODO: just run createcluster.sh
-- and create a disk
-- create a docker container from your meteor app
-- publish the container
-- 
-
 
 
 Building the meteor-kubernetes image
