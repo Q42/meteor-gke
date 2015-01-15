@@ -7,7 +7,7 @@ Now you'll need to sign in to your Google account.
 
     gcloud auth login
 
-Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones#available) and region to use. You won't need to specify the --zone flag in your gcloud commands once this is set.
+Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones#available) and region to use.
 
     gcloud config set compute/zone europe-west1-c
     gcloud config set compute/region europe-west1
@@ -59,6 +59,20 @@ Now setup the cluster:
 The script sets up a cluster with 3 nodes and a master, adds a Persistent Disk for Mongo, boots a Mongo pod, creates 3 pods for your Meteor container and finally sets up rules for the firewall and load balancer.
 
 At the end of the script it will show you the IP address of the load balancer at which your app should be running. Note that it could still take a bit at that point for your Meteor containers to start.
+
+
+
+Deploying a new version of your Meteor app
+------------------------------------------
+
+When you change your Meteor app and you want to deploy a new version you need to first build and push a new version of your Meteor container:
+
+    docker build -t chees/meteor-gke-example:2 .
+    docker push chees/meteor-gke-example
+
+Now edit meteor-controller.json to point to your latest container version and run:
+
+    ./deploynewversion.sh
 
 
 
