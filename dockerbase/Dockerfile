@@ -15,5 +15,4 @@ ONBUILD RUN (cd programs/server && npm install)
 EXPOSE 8080
 CMD []
 ENV PORT 8080
-# MONGO_SERVICE_HOST and MONGO_SERVICE_PORT are set by the Mongo service in Kubernetes:
 ENTRYPOINT MONGO_URL=mongodb://$MONGO_SERVICE_HOST:$MONGO_SERVICE_PORT /nodejs/bin/node main.js
