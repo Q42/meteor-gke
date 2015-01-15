@@ -127,6 +127,9 @@ I'll also be relying on Kit to keep me on point :)
 
 ## [http://130.211.60.131/](http://130.211.60.131/)
 
+^Go ahead and visit this IP, which points to the load balancer and will forward you
+to a specific server.
+
 ^Not working? Run `gcloud compute forwarding-rules list meteor` for the right IP.
 
 ---
@@ -169,9 +172,9 @@ like I should share with you the metaphor we were working with. Just because.
 - `docker build`
 - `docker push`
 
-^Now that we've configured how Container Engine should serve our app,
-^we need to wrap Meteor in Docker. Thankfully we've gone ahead and done
-^that and it's available here.
+^First we need to wrap Meteor in a Docker container.
+Thankfully we've gone ahead and done that, so just follow these steps
+to build your image.
 
 ---
 
@@ -196,19 +199,13 @@ gcloud compute firewall-rules create meteor-80
 	--target-tags k8s-meteor-node
 ```
 
----
-
-# Step 3: Persistent disk for MongoDB
-
-```sh
-gcloud compute disks create
-	--size=$DISK_SIZE
-	--zone=$ZONE $DISK_NAME
-```
+^This is the code for `setup.sh` which initialises everything. We set up a
+cluster and all the pods, services and replication controllers we need. Then
+we open the firewall.
 
 ---
 
-# Step 4: JSON configuration
+# Step 3: JSON configuration
 ## 1. Setting up a pod
 
 ```javascript
@@ -366,6 +363,19 @@ the same session.
 
 ---
 
+# Step 4: Persistent disk for MongoDB
+
+```sh
+gcloud compute disks create
+--size=$DISK_SIZE
+--zone=$ZONE $DISK_NAME
+```
+
+^We need a disk that Mongo can run on and which can be mounted to a volume.
+
+
+---
+
 # Step 5. Example Meteor app
 
 ### [registry.hub.docker.com/u/chees/meteor-gke-example](https://registry.hub.docker.com/u/chees/meteor-gke-example/)
@@ -394,8 +404,10 @@ the associated image.
 }
 ```
 
-^This feels like magic to me, but maybe I'm just new at this.
-Even better would be auto-scaling. This is something we'd like to look into.
+^Remember how I said we'd see why the declarative nature of the configuration
+is great? This is why. This feels like magic to me, but maybe I'm just new at this.
+
+^Even better would be auto-scaling. This is something we'd like to look into.
 
 ^https://cloud.google.com/container-engine/docs/replicationcontrollers/#scaling
 
