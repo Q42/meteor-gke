@@ -102,12 +102,6 @@ I'll also be relying on Kit to keep me on point :)
 
 ---
 
-![fit](https://raw.githubusercontent.com/Q42/meteor-on-gke/master/containers.png?token=AAIN4IedoSGJNVHkscZol5N9g-YOyv_Nks5UwLw2wA%3D%3D)
-
-^This is a high level overview of what I'm going to outline. Hope it makes sense :)
-
----
-
 # The following code is open source
 
 ## [github.com/q42/meteor-on-gke](http://github.com/q42/meteor-on-gke)
@@ -122,15 +116,30 @@ I'll also be relying on Kit to keep me on point :)
 
 # What we need
 
-1. Script to set everything up
-2. JSON configuration
-3. Persistent disk for Mongo
-4. Meteor Docker image
+1. Meteor Docker image
+2. Script to set everything up
+3. JSON configuration
+4. Persistent disk for Mongo
 5. Example Meteor app
 
 ---
 
-# Step 1: Set everything up
+# Step 1: Meteor Docker image
+
+## [fit][registry.hub.docker.com/u/chees/meteor-kubernetes](https://registry.hub.docker.com/u/chees/meteor-kubernetes/)
+
+```sh
+TODO
+```
+
+^Now that we've configured how Container Engine should serve our app,
+^we need to wrap Meteor in Docker. Thankfully we've gone ahead and done
+^that and it's available here.
+
+---
+
+
+# Step 2: Set everything up
 
 ```sh
 gcloud preview container clusters create meteor
@@ -153,7 +162,7 @@ gcloud compute firewall-rules create meteor-80
 
 ---
 
-# Step 2: Set up a persistent disk for MongoDB
+# Step 3: Persistent disk for MongoDB
 
 ```sh
 gcloud compute disks create
@@ -163,7 +172,7 @@ gcloud compute disks create
 
 ---
 
-# Step 3: JSON configuration
+# Step 4: JSON configuration
 ## 1. Setting up a pod
 
 ```javascript
@@ -314,16 +323,6 @@ gcloud compute disks create
 ^tell it to apply session stickiness based on your IP. So every time
 ^you visit from the same machine, you should get the same machine and
 ^the same session.
-
----
-
-# Step 4. Docker image for Meteor
-
-## [fit][registry.hub.docker.com/u/chees/meteor-kubernetes](https://registry.hub.docker.com/u/chees/meteor-kubernetes/)
-
-^Now that we've configured how Container Engine should serve our app,
-^we need to wrap Meteor in Docker. Thankfully we've gone ahead and done
-^that and it's available here.
 
 ---
 
