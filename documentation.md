@@ -7,93 +7,81 @@ Now you'll need to sign in to your Google account.
 
     gcloud auth login
 
-Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones#available) and region to use. You won't need to specify the --zone flag in your gcloud commands once this is set.
+Set the [Google Compute Engine zone](https://cloud.google.com/compute/docs/zones#available) and region to use.
 
     gcloud config set compute/zone europe-west1-c
     gcloud config set compute/region europe-west1
 
 
 
-Building the meteor-kubernetes image
-------------------------------------
+Build a container for your Meteor app
+-------------------------------------
 
-As a normal user you don't need to do this since the image is already built. You can just use it as a base image.
-To build and push the base meteor-kubernetes image:
+To be able to run your Meteor app on GKE you need to build a container for it first. To do that you need to install [Docker](https://www.docker.com) and get an account on [Docker Hub](https://hub.docker.com/). Once you have that you need to add 2 files to your Meteor project "Dockerfile" and ".dockerignore".
 
-    docker build -t chees/meteor-kubernetes .
-    docker push chees/meteor-kubernetes
+"Dockerfile" should contain this:
 
+    FROM chees/meteor-kubernetes
+    ENV ROOT_URL http://myawesomeapp.com
 
+You should replace the ROOT_URL with the actual hostname of your app.
 
-Create a Container Engine cluster
----------------------------------
+The .dockerignore file should contain this:
 
-Create a cluster named `meteor`:
+    .meteor/local
+    packages/*/.build*
 
-    gcloud preview container clusters create meteor
+This tells docker to ignore the files on those directories when it's building your container.
 
+You can see an example of a Dockerfile in our [meteor-gke-example](https://github.com/Q42/meteor-gke-example) project.
 
+Now you can build your container by running something like this in your Meteor project directory:
 
-Setup Mongo
------------
+    docker build -t chees/meteor-gke-example:1 .
 
-Create a Mongo pod:
+Here you should replace "chees" with your own username on Docker Hub, "meteor-gke-example" with the name of your project and "1" with the version name of your build.
 
-    gcloud preview container pods create --config-file mongo-pod.json
+Push the container to your Docker hub account (replace the username and project with your own again):
 
-Verify that it is running:
-
-    gcloud preview container pods list
-
-After a couple of minutes the Status should be "Running".
-
-Create a Mongo service:
-
-    gcloud preview container services create --config-file mongo-service.json
+    docker push chees/meteor-gke-example
 
 
 
-Build your container
---------------------
+Setting up the Google Container Engine cluster
+----------------------------------------------
 
-TODO
+Now that you have containerized your Meteor app it's time to set up your cluster. Edit "meteor-controller.json" and make sure the "image" points to the container you just pushed to the Docker Hub.
+
+Now setup the cluster:
+
+    ./setup.sh
+
+The script sets up a cluster with 3 nodes and a master, adds a Persistent Disk for Mongo, boots a Mongo pod, creates 3 pods for your Meteor container and finally sets up rules for the firewall and load balancer.
+
+At the end of the script it will show you the IP address of the load balancer at which your app should be running. Note that it could still take a bit at that point for your Meteor containers to start.
 
 
 
-Setup Meteor
-------------
+Deploying a new version of your Meteor app
+------------------------------------------
 
-Create a replication controller for your Meteor container:
+When you change your Meteor app and you want to deploy a new version you need to first build and push a new version of your Meteor container (make sure to replace "chees" with your own Docker username again):
 
-    gcloud preview container replicationcontrollers create --config-file meteor-controller.json
+    docker build -t chees/meteor-gke-example:2 .
+    docker push chees/meteor-gke-example
 
-Create a Meteor service:
+Now edit meteor-controller.json to point to your latest container version and run:
 
-    gcloud preview container services create --config-file meteor-service.json
-
-Open the firewall:
-
-    gcloud compute firewall-rules create meteor-80 --allow=tcp:80 --target-tags k8s-meteor-node
-
-Get the external IP address:
-
-    gcloud compute forwarding-rules list
+    ./deploynewversion.sh
 
 
 
 Cleanup
 -------
 
-Delete the cluster:
+If you want to delete your cluster you can run:
 
-    gcloud preview container clusters delete meteor
+    ./cleanup.sh
 
-Delete the loadbalancer:
-
-    gcloud compute forwarding-rules delete meteor
-    gcloud compute target-pools delete meteor
-
-Delete the firewall rule:
-
-    gcloud compute firewall-rules delete meteor-80
+This will delete your whole cluster except the persistent disk for Mongo, so setting up the cluster again will get you back in the same state.
 
