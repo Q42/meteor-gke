@@ -1,10 +1,22 @@
 footer: [Q42.com](http://q42.com)
 slidenumbers: true
 
-# Hi, I'm @Rahul!
-## Running US office of @Q42
+![left 70%](/Users/rahul/Desktop/meteorkubernetes.png)
 
-^Today I'm going to talk a little about our efforts at building a script that will
+# ...kind of like
+
+![inline](http://www.bigbadtoystore.com/images/products/in/large/TAK11974.jpg)
+
+^This is a talk about combining two awesome things: Meteor and Kubernetes.
+Just like the upcoming Optimus Prime who can transform into a Playstation,
+bringing the two together is an obvious thing that must happen.
+
+---
+
+# Hi, I'm [@Rahul](http://twitter.com/rahul)!
+## Running US office of [@Q42](http://twitter.com/q42)
+
+^Anyway, today I'm going to talk a little about our efforts at building a script that will
 help you deploy your Meteor app to Container Engine.
 
 ^But first you should know who I am and why we're doing this.
@@ -15,15 +27,14 @@ help you deploy your Meteor app to Container Engine.
 
 # Explorers & creative technologists
 
-![left 200%](/Users/rahul/Dropbox/dev/Q42/Q42 logo/Q42_logo_RGB.png)
+![left 80%](/Users/rahul/Dropbox/dev/Q42/Q42 logo/old/q42-logo-whitespace.png)
 
 - 60 engineers in Mountain View & NL
 - Early start on App Engine in '08
 - Early start with Meteor in '12
 - Both now core technologies for us
 
-^We're also explorers: of our 60 employees, 55 are engineers and we love learning new stuff that
-helps us spend more time on building cool products.
+^We love learning new stuff that helps us spend more time on building cool products.
 
 ^So we got into App Engine in 2008 because it felt like the right direction for a cloud platform.
 And we started playing with Meteor in 2012. Both of these follow the philosophy of minimising
@@ -31,8 +42,9 @@ dev ops, giving you more time to spend on the business logic.
 
 ^While we've progressed to using Google Cloud Platform to host all kinds of large scale projects
 like the infrastructure of the Philips Hue smartphone-controlled lights,
-we're still at that stage of being a little insecure about
-Meteor. We use it a lot: internal tools, projects, even our own educational startup. But it's
+we're still at that stage of being a little insecure about Meteor.
+
+^We use it a lot: internal tools, projects, even our own educational startup. But it's
 clearly still growing.
 
 ---
@@ -46,7 +58,8 @@ clearly still growing.
 
 ^One area where it's really excelled is in our jumpstarts. We use 'jumpstart' to refer to a
 week-long acceleration we do with startups and companies still in search of the right idea.
-Often we'll start with a high level idea and end with a working first version of the product.
+
+^Often we'll start with a high level idea and end with a working first version of the product.
 Meteor has been invaluable here.
 
 ---
@@ -57,9 +70,10 @@ Meteor has been invaluable here.
 - Client & server - fully functional demo
 - Everyone can write Javascript
 
-^With Meteor so many things we used to worry about are a thing of the past. Like using
-grunt to watch a folder and compile your less files. Or having to reload the page after
-you change a file. But also basic front end stuff like the glue or boilerplate you always
+^With Meteor so many things we used to worry about are a thing of the past.
+Like using grunt to watch a folder and compile your less files. Or having to reload the page after you change a file.
+
+^But also basic front end stuff like the glue or boilerplate you always
 have to write to send data to the server, or do form validation, etc. It's like programming
 in the future. On top of that, since the whole stack - client, server, and database -
 is in Javascript, basically anyone can join the team at any time. There's barely any
@@ -116,6 +130,26 @@ I'll also be relying on Kit to keep me on point :)
 
 ---
 
+# A terrible metaphor
+
+- Container engine is like a pirate ship
+- The captain is the K8S Master
+- The cargo is the nodes, which contain pods
+- The first officer is the service who knows where to put cargo
+- Another pirate is the replication controller in charge of making new pods
+- How long can this go on
+
+![left 100%](http://rockinmama.net/wp-content/uploads/2010/01/6243-LEGO-Brickbeards-Bounty.jpg)
+
+^For this talk we were looking to visualise how things work to help understand it.
+But we realised it was a bit convoluted and probably better explained by walking
+through the steps and then giving you access to the repo. Still, I felt
+like I should share with you the metaphor we were working with. Just because.
+
+^(Did you know Kubernetes means "helmsman of a ship" in Greek?)
+
+---
+
 # What we need
 
 1. Meteor Docker image
@@ -139,7 +173,6 @@ I'll also be relying on Kit to keep me on point :)
 ^that and it's available here.
 
 ---
-
 
 # Step 2: Set everything up
 
@@ -191,10 +224,10 @@ gcloud compute disks create
 ```
 
 ^The important thing about this configuration format is that
-^it's declarative: we just describe what we want our cluster
-^to look like, and when we tell Kubernetes or GKE about it,
-^it's their job to figure out how to make it happen.
-^We'll see why this is great in a moment.
+it's declarative: we just describe what we want our cluster
+to look like, and when we tell Kubernetes or GKE about it,
+it's their job to figure out how to make it happen.
+We'll see why this is great in a moment.
 
 ---
 
@@ -214,7 +247,11 @@ gcloud compute disks create
 ```
 
 ^We want a pod with a volume mounted to a given disk and exposed
-^over a given port.
+over a given port.
+
+^Volumes enable data to survive container restarts and to be shared among the containers within the pod.
+
+^Individual pods are not intended to run multiple instances of the same application, in general.
 
 ---
 
@@ -278,8 +315,8 @@ gcloud compute disks create
 ```
 
 ^This tells GKE that we want 3 replicas using the following template
-^for the pods running inside it. Note the 1000 value for CPU, which is measured
-^in milli-cores :)
+for the pods running inside it. Note the 1000 value for CPU, which is measured
+in milli-cores :)
 
 ---
 
@@ -321,10 +358,10 @@ gcloud compute disks create
 ```
 
 ^Finally, we define that all of this should be accessible on port 80 (as defined earlier)
-^The last two lines are important: we set up a load balancer and
-^tell it to apply session stickiness based on your IP. So every time
-^you visit from the same machine, you should get the same machine and
-^the same session.
+The last two lines are important: we set up a load balancer and
+tell it to apply session stickiness based on your IP. So every time
+you visit from the same machine, you should get the same machine and
+the same session.
 
 ---
 
@@ -333,13 +370,13 @@ gcloud compute disks create
 ### [registry.hub.docker.com/u/chees/meteor-gke-example](https://registry.hub.docker.com/u/chees/meteor-gke-example/)
 
 ^As I demo'd earlier, we also made a simple Meteor app that runs in
-^the container. It uses MongoDB to store some data, syncs that data
-^down to the client over DDP, and gives you a sense of whether your
-^configuration is working correctly.
+the container. It uses MongoDB to store some data, syncs that data
+down to the client over DDP, and gives you a sense of whether your
+configuration is working correctly.
 
 ^The way we've set it up now is with a repo watcher on Github that
-^will inform the Docker registry whenever we push code, and rebuild
-^the associated image.
+will inform the Docker registry whenever we push code, and rebuild
+the associated image.
 
 ---
 
@@ -357,22 +394,38 @@ gcloud compute disks create
 ```
 
 ^This feels like magic to me, but maybe I'm just new at this.
+Even better would be auto-scaling. This is something we'd like to look into.
+
+^https://cloud.google.com/container-engine/docs/replicationcontrollers/#scaling
 
 ---
 
-# (more slides go here)
+# What about updating your app?
 
-- show bash command to increase number of replicas
-- load testing?
-- deployversion.sh
-- session affinity
+```sh
+gcloud preview container replicationcontrollers delete meteor-controller
 
-- slide with links to docs for GKE/Kubernetes
+gcloud preview container replicationcontrollers create
+	--config-file meteor-controller.json
 
+# Rolling update
+OLD_PODS=`gcloud preview container pods list | grep name=meteor | cut -f1 -d ' '`
+while read -r POD; do
+	gcloud preview container pods delete $POD
+	# You might want to do the rolling update slower in practice:
+	sleep 30
+done <<< "$OLD_PODS"
+```
+
+^Updating your app is made possible with rolling updates. How it works is that you
+replace your controller with a new one, then delete the old pods one by one.
+The controller will start up new pods for you automatically.
+
+^https://cloud.google.com/container-engine/docs/replicationcontrollers/#scaling
 
 ---
 
-# Future options
+# This is just the start. Now what?
 
 - Extend Meteor command line?
 	- `meteor deploy gke`?
@@ -388,6 +441,14 @@ gcloud compute disks create
 
 ---
 
+# More reading
+
+- [meteor.com](http://meteor.com)
+- [github.com/GoogleCloudPlatform/Kubernetes](https://github.com/googlecloudplatform/kubernetes)
+- [cloud.google.com/container-engine](https://cloud.google.com/container-engine/)
+
+---
+
 # Thanks to Christiaan Hees
 
 ## Who did all the work. I just talked about it. :)
@@ -398,6 +459,16 @@ gcloud compute disks create
 
 ---
 
+# Btw, here's something from Google:
+
+## $500 in Google Cloud Platform credit!
+
+- Go to [http://cloud.google.com/startercredit](http://cloud.google.com/startercredit)
+- Click Apply Now
+- Complete the form with code: `meteor-org`
+
+---
+
 ![fit left](~/Desktop/goobernetes.png)
 
 # Thanks for coming :)
@@ -405,4 +476,5 @@ gcloud compute disks create
 - Next week: "Introduction to Meteor"
 	- Jan 21st, 6pm, same place
 	- [meetup.com/javascript-9](http://www.meetup.com/javascript-9/events/219807509/)
-- Wanna host a meetup? Get in touch! [@q42](http://twitter.com/q42) or [@rahul](http://twitter.com/rahul)
+- Have a venue? Get in touch!
+	[@q42](http://twitter.com/q42) or [@rahul](http://twitter.com/rahul)
