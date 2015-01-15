@@ -104,8 +104,9 @@ take this, but this is our first attempt.
 
 # Getting started
 
-- Install `gcloud` command line
-- Install `preview` features
+- [Install `gcloud` command line](https://cloud.google.com/sdk/gcloud/)
+- Install `preview container`
+- [cloud.google.com/container-engine/docs/before-you-begin](https://cloud.google.com/container-engine/docs/before-you-begin)
 
 ^Just as a reminder: all of the following code depends on installing the command line tools!
 
