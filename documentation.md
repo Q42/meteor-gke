@@ -65,7 +65,7 @@ At the end of the script it will show you the IP address of the load balancer at
 Deploying a new version of your Meteor app
 ------------------------------------------
 
-When you change your Meteor app and you want to deploy a new version you need to first build and push a new version of your Meteor container:
+When you change your Meteor app and you want to deploy a new version you need to first build and push a new version of your Meteor container (make sure to replace "chees" with your own Docker username again):
 
     docker build -t chees/meteor-gke-example:2 .
     docker push chees/meteor-gke-example
