@@ -125,7 +125,7 @@ I'll also be relying on Kit to keep me on point :)
 
 # Demo
 
-## [http://146.148.123.98](http://146.148.123.98/)
+## [http://130.211.60.131/](http://130.211.60.131/)
 
 ^Not working? Run `gcloud compute forwarding-rules list meteor` for the right IP.
 
