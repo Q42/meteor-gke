@@ -112,6 +112,8 @@ I'll also be relying on Kit to keep me on point :)
 
 ## [http://146.148.123.98](http://146.148.123.98/)
 
+^Not working? Run `gcloud compute forwarding-rules list meteor` for the right IP.
+
 ---
 
 # What we need
@@ -126,11 +128,11 @@ I'll also be relying on Kit to keep me on point :)
 
 # Step 1: Meteor Docker image
 
-## [fit][registry.hub.docker.com/u/chees/meteor-kubernetes](https://registry.hub.docker.com/u/chees/meteor-kubernetes/)
-
-```sh
-TODO
-```
+- Add the following Dockerfile to your Meteor app
+	- `FROM chees/meteor-kubernetes`
+	- `ENV ROOT_URL {{your_hostname}}`
+- `docker build`
+- `docker push`
 
 ^Now that we've configured how Container Engine should serve our app,
 ^we need to wrap Meteor in Docker. Thankfully we've gone ahead and done
@@ -383,6 +385,16 @@ gcloud compute disks create
 # Get involved!
 
 ## [github.com/q42/meteor-on-gke](http://github.com/q42/meteor-on-gke)
+
+---
+
+# Thanks to Christiaan Hees
+
+## Who did all the work. I just talked about it. :)
+
+### ![100%](https://pbs.twimg.com/profile_images/1181534871/christiaan.jpeg)
+
+# [@christiaanhees](http://twitter.com/christiaanhees)
 
 ---
 
