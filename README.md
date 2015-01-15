@@ -15,4 +15,6 @@ This repository represents our first exploration of the shell scripts required t
 
 To get started, read [the documentation](documentation.md). We're accepting any issues you run into and any pull requests you think are relevant and would love to hear from you at @q42 on Twitter!
 
+## What the architecture roughly looks like. Including Nyan cat.
+
 ![Visual overview](containers.png)
