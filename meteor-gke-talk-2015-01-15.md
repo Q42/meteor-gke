@@ -1,10 +1,6 @@
 footer: [Q42.com](http://q42.com)
 slidenumbers: true
 
-^- make a short url for the different IPs of the clusters
-^- $500 giveaway
-^- email kit draft of talk
-
 # Hi, I'm @Rahul!
 ## Running US office of @Q42
 
@@ -399,14 +395,3 @@ gcloud compute disks create
 	- Jan 21st, 6pm, same place
 	- [meetup.com/javascript-9](http://www.meetup.com/javascript-9/events/219807509/)
 - Wanna host a meetup? Get in touch! [@q42](http://twitter.com/q42) or [@rahul](http://twitter.com/rahul)
-
----
-
-# Demo
-
-x slide showing meteor on kubernetes overview
-x talk about setting up mongo on a persistent disk
-- update the image being deployed to the latest version
-- show json config, talk about declarative nature
-- talk about scaling by changing number of replicas
-- show creating an image from meteor app and publishing it
