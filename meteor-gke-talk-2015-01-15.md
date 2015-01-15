@@ -159,8 +159,7 @@ like I should share with you the metaphor we were working with. Just because.
 1. Meteor Docker image
 2. Script to set everything up
 3. JSON configuration
-4. Persistent disk for Mongo
-5. Example Meteor app
+4. Example Meteor app
 
 ---
 
@@ -244,12 +243,11 @@ We'll see why this is great in a moment.
 }]
 ```
 
-^We want a pod with a volume mounted to a given disk and exposed
-over a given port.
+^We want a pod based on the official mongo docker image, with a volume mounted to a given disk and exposed over a given port.
 
-^Volumes enable data to survive container restarts and to be shared among the containers within the pod.
+^(Volumes enable data to survive container restarts and to be shared among the containers within the pod.)
 
-^Individual pods are not intended to run multiple instances of the same application, in general.
+^(Individual pods are not intended to run multiple instances of the same application, in general.)
 
 ---
 
@@ -267,7 +265,8 @@ over a given port.
 }]
 ```
 
-^We want a persistent disk that stays around even if we tear down the cluster.
+^This is where we define the disk MongoDB will use and indicate that it should be persistent
+so that it stays around even if we tear down the cluster.
 
 ---
 
@@ -312,8 +311,9 @@ over a given port.
 }
 ```
 
-^This tells GKE that we want 3 replicas using the following template
-for the pods running inside it. Note the 1000 value for CPU, which is measured
+^This tells GKE that we want 3 replicas using the following template for the pods running inside it.
+
+^Note the 1000 value for CPU, which is measured
 in milli-cores :)
 
 ---
@@ -336,7 +336,7 @@ in milli-cores :)
 }
 ```
 
-^Here we're telling Mongo to go ahead and run on a given port
+^Here we're telling a service to go ahead and run Mongo on a given port
 
 ---
 
@@ -356,27 +356,14 @@ in milli-cores :)
 ```
 
 ^Finally, we define that all of this should be accessible on port 80 (as defined earlier)
-The last two lines are important: we set up a load balancer and
+
+^The last two lines are important: we set up a load balancer and
 tell it to apply session stickiness based on your IP. So every time
-you visit from the same machine, you should get the same machine and
-the same session.
+you visit from the same machine, you should get the same session.
 
 ---
 
-# Step 4: Persistent disk for MongoDB
-
-```sh
-gcloud compute disks create
---size=$DISK_SIZE
---zone=$ZONE $DISK_NAME
-```
-
-^We need a disk that Mongo can run on and which can be mounted to a volume.
-
-
----
-
-# Step 5. Example Meteor app
+# Step 4. Example Meteor app
 
 ### [registry.hub.docker.com/u/chees/meteor-gke-example](https://registry.hub.docker.com/u/chees/meteor-gke-example/)
 
@@ -391,9 +378,7 @@ the associated image.
 
 ---
 
-# So what if we want to scale?
-
-## Just change the number of replicas!
+# Just change the number of replicas to scale
 
 **`"replicas": 5,`**
 
@@ -430,9 +415,11 @@ while read -r POD; do
 done <<< "$OLD_PODS"
 ```
 
-^Updating your app is made possible with rolling updates. How it works is that you
-replace your controller with a new one, then delete the old pods one by one.
-The controller will start up new pods for you automatically.
+^Updating your app is made possible with rolling updates.
+
+^How it works is that you replace your controller with a new one, then delete the old pods one by one.
+
+^The controller will start up new pods for you automatically.
 
 ^https://cloud.google.com/container-engine/docs/replicationcontrollers/#scaling
 
@@ -476,7 +463,7 @@ The controller will start up new pods for you automatically.
 
 ## $500 in Google Cloud Platform credit!
 
-- Go to [http://cloud.google.com/startercredit](http://cloud.google.com/startercredit)
+- Go to [cloud.google.com/startercredit](http://cloud.google.com/startercredit)
 - Click Apply Now
 - Complete the form with code: `meteor-org`
 
