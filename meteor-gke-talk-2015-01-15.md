@@ -5,7 +5,7 @@ slidenumbers: true
 
 # ...kind of like
 
-![inline](http://www.bigbadtoystore.com/images/products/in/large/TAK11974.jpg)
+![inline](http://www.tomopop.com/ul/35640-00%20Header.jpg)
 
 ^This is a talk about combining two awesome things: Meteor and Kubernetes.
 Just like the upcoming Optimus Prime who can transform into a Playstation,
@@ -131,26 +131,6 @@ I'll also be relying on Kit to keep me on point :)
 to a specific server.
 
 ^Not working? Run `gcloud compute forwarding-rules list meteor` for the right IP.
-
----
-
-# A terrible metaphor
-
-- Container engine is like a pirate ship
-- The captain is the K8S Master
-- The cargo is the nodes, which contain pods
-- The first officer is the service who knows where to put cargo
-- Another pirate is the replication controller in charge of making new pods
-- How long can this go on
-
-![left 100%](http://rockinmama.net/wp-content/uploads/2010/01/6243-LEGO-Brickbeards-Bounty.jpg)
-
-^For this talk we were looking to visualise how things work to help understand it.
-But we realised it was a bit convoluted and probably better explained by walking
-through the steps and then giving you access to the repo. Still, I felt
-like I should share with you the metaphor we were working with. Just because.
-
-^(Did you know Kubernetes means "helmsman of a ship" in Greek?)
 
 ---
 
@@ -422,6 +402,14 @@ done <<< "$OLD_PODS"
 ^The controller will start up new pods for you automatically.
 
 ^https://cloud.google.com/container-engine/docs/replicationcontrollers/#scaling
+
+---
+
+# Takeaways
+
+1. Expressing scaling declaratively is awesome
+2. Not thinking about the underlying hardware is awesome
+3. Viewing the cloud as a single CPU is awesome
 
 ---
 
