@@ -1,19 +1,20 @@
 footer: [Q42.com](http://q42.com)
 slidenumbers: true
 
-![left 70%](/Users/rahul/Desktop/meteorkubernetes.png)
-
-# ...kind of like
-
-![inline](http://www.tomopop.com/ul/35640-00%20Header.jpg)
+![70%](/Users/rahul/Desktop/meteorkubernetes.png)
 
 ^This is a talk about combining two awesome things: Meteor and Kubernetes.
-Just like the upcoming Optimus Prime who can transform into a Playstation,
+
+---
+
+![fit](http://www.tomopop.com/ul/35640-00%20Header.jpg)
+
+^Just like the upcoming Optimus Prime who can transform into a Playstation,
 bringing the two together is an obvious thing that must happen.
 
 ---
 
-# Hi, I'm [@Rahul](http://twitter.com/rahul)!
+# BTW, I'm [@Rahul](http://twitter.com/rahul)!
 ## Running US office of [@Q42](http://twitter.com/q42)
 
 ^Anyway, today I'm going to talk a little about our efforts at building a script that will
