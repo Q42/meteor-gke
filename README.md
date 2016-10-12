@@ -14,7 +14,3 @@ At [Q42](http://q42.com) we view Cloud Platform and Meteor as core technologies 
 This repository represents our first exploration of the shell scripts required to deploy your Meteor app to Container Engine. It takes care of basic configuration of your cluster, sets up pods and a replication controller and initialises replicas. We use a persistent disk for MongoDB, which means that even if you tear down the cluster, your data remains safe. And by binding session affinity to your client's IP, you should get a nice sticky session.
 
 To get started, read [the documentation](documentation.md). We're accepting any issues you run into and any pull requests you think are relevant and would love to hear from you at [@q42 on Twitter](http://twitter.com/q42)!
-
-## What the architecture roughly looks like. Including Nyan cat.
-
-![Visual overview](containers.png)

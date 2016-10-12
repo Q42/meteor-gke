@@ -9,7 +9,7 @@ ZONE=europe-west1-c
 # TODO set CLOUDSDK_CONTAINER_CLUSTER ?
 
 # Create a new cluster called "meteor". This will take a few minutes.
-gcloud preview container clusters create meteor
+gcloud alpha container clusters create meteor
 
 
 if gcloud compute disks list $DISK_NAME | grep READY > /dev/null
@@ -29,12 +29,12 @@ fi
 
 
 # Create pods and a service based on the JSON configuration
-gcloud preview container pods create --config-file mongo-pod.json
-gcloud preview container services create --config-file mongo-service.json
+gcloud alpha container kubectl create -f mongo-pod.json
+gcloud alpha container kubectl create -f mongo-service.json
 
 echo "Waiting for Mongo to boot before creating the Meteor pods..."
 while true; do
-  MONGO_STATUS=`gcloud preview container pods describe mongo | tr -d '\n' | tr ' ' '\n' | tail -n1`
+  MONGO_STATUS=`gcloud alpha container kubectl describe pods mongo | grep Status: | awk '{print $2}'`
   if [ "$MONGO_STATUS" == "Running" ]; then
     echo
     break
@@ -43,13 +43,17 @@ while true; do
   sleep 2
 done
 
+# Sleep some extra time for the mongodb to start up
+sleep 20
+
 # Create our replication controller and service, also based on the JSON configuration
-gcloud preview container replicationcontrollers create --config-file meteor-controller.json
-gcloud preview container services create --config-file meteor-service.json
+gcloud alpha container kubectl create -f meteor-controller.json
+gcloud alpha container kubectl create -f meteor-service.json
 
 # We need to configure the correct firewall rules or nothing will get through
 gcloud compute firewall-rules create meteor-80 --allow=tcp:80 --target-tags k8s-meteor-node
 
 echo
 echo "Your Meteor app should now be available on the following ip address:"
-gcloud compute forwarding-rules list meteor
+gcloud compute forwarding-rules list k8s-meteor-default-meteor | grep k8s-meteor-default-meteor | awk '{print $3}'
+

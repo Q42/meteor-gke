@@ -1,7 +1,7 @@
 Prerequisites
 -------------
 
-Follow the steps in [Before You Begin](https://cloud.google.com/container-engine/docs/before-you-begin) to create a project, enable billing, and activate the Container Engine and Compute Engine APIs. Don't forget to turn on the preview component!
+Follow the steps in [Before You Begin](https://cloud.google.com/container-engine/docs/before-you-begin) to create a project, enable billing, and activate the Container Engine and Compute Engine APIs. Don't forget to turn on the alpha component!
 
 Now you'll need to sign in to your Google account.
 
