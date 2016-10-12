@@ -1,7 +1,7 @@
 footer: [Q42.com](http://q42.com)
 slidenumbers: true
 
-![70%](/Users/rahul/Desktop/meteorkubernetes.png)
+![70%](meteorkubernetes.png)
 
 ^This is a talk about combining two awesome things: Meteor and Kubernetes.
 
@@ -458,7 +458,7 @@ done <<< "$OLD_PODS"
 
 ---
 
-![fit left](~/Desktop/goobernetes.png)
+![fit left](goobernetes.png)
 
 # Thanks for coming :)
 
